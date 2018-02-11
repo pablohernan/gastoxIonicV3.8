@@ -28,7 +28,14 @@ export class SincPage {
   tasksRef: AngularFireList<any>;
   tasks: Observable<any[]>;
 
-  constructor(public navCtrl: NavController, public database: AngularFireDatabase,public loadingCtrl: LoadingController, public ld:LocalData , public dUtils:DataUtils ,  public cc:CurrencyConvert ) {    
+  constructor(
+    public navCtrl: NavController, 
+    public database: AngularFireDatabase,
+    public loadingCtrl: LoadingController, 
+    public ld:LocalData , 
+    public dUtils:DataUtils ,  
+    public cc:CurrencyConvert 
+    ) {    
 
     this.dbListCategorias = this.database.list('/gastox/datos/categorias').valueChanges();
 
@@ -171,12 +178,17 @@ export class SincPage {
     var start:any = this.dUtils.dateToUnix(this.dUtils.dateToString(dataFilter));
 
     this.ld.setItem('utimosDias' , [this.utimosDias] );    
-    this.dbListServerRef = this.database.list('gastox/datos/gastos', 
+
+    this.dbListServer = this.database.list('gastox/datos/gastos', 
     ref => ref
-			    	.orderByChild('fecha')
-			    	.startAt(start) 
-    	);
-    this.dbListServer = this.dbListServerRef.valueChanges();
+            .orderByChild('fecha')
+            .startAt(start) 
+      )
+      .snapshotChanges().map(actions => {
+        return actions.map(action => ({ // add key in the array
+         key: action.key, ...action.payload.val() 
+       }));
+      });
 
     this.dbListServer.subscribe().unsubscribe();
     this.dbListServer.subscribe(snapshots=>{
@@ -227,6 +239,7 @@ export class SincPage {
   cerrar(){
     this.loader.dismiss();
   }
+
 
 
 

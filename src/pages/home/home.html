@@ -5,12 +5,12 @@
     </button>
 
     <ion-title>
-      GastoX
+      <span class="text-white">GastoX</span>
     </ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="sincronizar()">
-        <ion-icon name="refresh"></ion-icon>
+        <ion-icon name="refresh" class="text-white"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -24,7 +24,7 @@
 
     <ion-list>
       <ion-item text-wrap *ngFor="let local of localList"
-      (press)="copiar(local)">
+      (press)="msgAction(local)">
         <ion-icon name="laptop" danger item-left></ion-icon>
 
         <h2>{{local.nombre}}</h2> 
@@ -37,7 +37,7 @@
       </ion-item>
 
       <ion-item text-wrap *ngFor="let server of serverList" 
-      (press)="copiar(server)">
+      (press)="msgAction(server)">
         <ion-icon name="cloud-done" favorite item-left></ion-icon>
 
         <h2>{{server.nombre}}</h2> 
@@ -53,8 +53,8 @@
 
 
 
-<ion-fab bottom right style="padding-right:10px;">
-  <button ion-fab color="primary" (click)="newGasto()"><ion-icon name="add"></ion-icon></button>
+<ion-fab bottom right >
+  <button ion-fab color="primary" class="butom-custom-float" (click)="newG()"><ion-icon name="add"></ion-icon></button>
 </ion-fab>
 
 
@@ -63,6 +63,6 @@
 
 <ion-footer class="home">
  <ion-toolbar>
-   <ion-title ><span class="total_desc">Total :  <span class="total"> USD {{total}} </span> (Ultimos {{utimosDias}} días)</span></ion-title>
+   <ion-title ><span class="text-white">Total :  <span> USD {{total}} </span> (Ultimos {{utimosDias}} días)</span></ion-title>
  </ion-toolbar>
 </ion-footer>

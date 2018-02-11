@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController} from 'ionic-angular';
 //import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 //import { Observable } from 'rxjs/Observable';
 import { FormPage } from '../form/form';
@@ -24,7 +24,13 @@ export class HomePage {
   total : String;
   utimosDias : number;
   precio : any;
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public ld:LocalData, public dUtils:DataUtils, public fmt:Format) {
+  constructor(
+    public navCtrl: NavController, 
+    public alertCtrl: AlertController, 
+    public ld:LocalData, 
+    public dUtils:DataUtils, 
+    public fmt:Format) {
+
      if(! JSON.parse(localStorage.getItem('categorias')) )
          this.sincronizar();
 
@@ -107,85 +113,66 @@ export class HomePage {
 
   }
 
-  newGasto(){
-    this.navCtrl.push(FormPage);
-  }
-
   sincronizar(){
     this.navCtrl.push(SincPage);
   }
 
-  copiar(item){
-      this.navCtrl.push(FormPage, {
-        item: item
+  //Nuevo , Copiar , Editar, Delete
+  newG(){
+    this.navCtrl.push(FormPage, {
+        action: 'new'
       })
   }
 
-
-
-/*
-  constructor(
-    public navCtrl: NavController,
-    public alertCtrl: AlertController,
-    public database: AngularFireDatabase
-  ) {
-    this.tasks = this.database.list('gastoxteste').valueChanges();
-    console.log(this.tasks);
-
- // https://github.com/angular/angularfire2/blob/master/docs/rtdb/lists.md 
-
+  copy(item){
+      this.navCtrl.push(FormPage, {
+        item: item,
+        action: 'copy'
+      })
   }
 
-  createTask(){
-    let newTaskModal = this.alertCtrl.create({
-      title: 'New Task',
-      message: "Enter a title for your new task",
-      inputs: [
-        {
-          name: 'title',
-          placeholder: 'Title'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: data => {
-            this.tasksRef.push({
-              title: data.title,
-              done: false
-            });
-          }
-        }
-      ]
-    });
-    newTaskModal.present( newTaskModal );
-  }
-
-  updateTask( task ){
-    this.tasksRef.update( task.key,{
-      title: task.title,
-      done: !task.done
-    });
-  }
-
-  addTask( title ){
-    this.tasksRef.push({
-      title: title,
-      done: false
-    });
+  edit(item){
+      this.navCtrl.push(FormPage, {
+        item: item,
+        action: 'edit'
+      })
   }  
 
-  removeTask( task ){
-    console.log( task );
-    this.tasksRef.remove( task.key );
-  }
-  */
+  del(item){
+      this.navCtrl.push(FormPage, {
+        item: item,
+        action: 'del'
+      })
+  }    
 
+
+
+  msgAction( item ) {
+      //console.log(task.key)
+      let confirm = this.alertCtrl.create({
+        title: 'Que desea hacer?',
+        buttons: [
+          {
+            text: 'Copiar',
+            handler: () => {
+              this.copy(item);
+            }
+          },
+          {
+            text: 'Editar',
+            handler: () => {
+              this.edit(item);
+            }
+          },
+          {
+            text: 'Eliminar',
+            handler: () => {
+              this.del(item);
+            }
+          }
+        ]
+      });
+      confirm.present();
+  }
 
 }

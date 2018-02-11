@@ -31,12 +31,12 @@ import { HttpModule } from '@angular/http';
 */
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyDr2GPZnMYEjGbkxHxylQjb-hG-pvtiW_Y",
-    authDomain: "gastox-36265.firebaseapp.com",
-    databaseURL: "https://gastox-36265.firebaseio.com",
-    projectId: "gastox-36265",
-    storageBucket: "gastox-36265.appspot.com",
-    messagingSenderId: "703065408166"
+    apiKey: "AIzaSyBcVkiIaa4VV8uBFj8obp6KfwSYGEelE7E",
+    authDomain: "gastoxteste.firebaseapp.com",
+    databaseURL: "https://gastoxteste.firebaseio.com",
+    projectId: "gastoxteste",
+    storageBucket: "gastoxteste.appspot.com",
+    messagingSenderId: "783835888128"
 };
 
 @NgModule({

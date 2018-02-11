@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Nuevo gasto</ion-title>
+    <ion-title><span class="text-white">Nuevo gasto</span></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -76,7 +76,7 @@
   </ion-item>
 
 <div style="width: 100%;text-align:center;">
-    <button round button ion-button orange (click)="crearGasto(nombre,updateCambio(),categoria,fecha,lugar,descripcion)">
+    <button round button ion-button class="butom-custom" (click)="crearGasto()">
       Grabar
     </button>
 </div>    

@@ -205,12 +205,26 @@ ZWD-Zimbabwe Dollar
 
   }
 
+  // recibe moneda local
   getValueConvert( curr:string , value:number){
     var cambio = JSON.parse(localStorage.getItem( 'cambio' ))
     var retArray = cambio.filter((item) => {
       return (item.from == curr);
     });
-    return retArray[0].value * value;
+    return retArray[0].value * value; // return precio en dolares
   }  
+
+  //recibe dolares
+  getValueConvertInver( curr:string , value:number){
+    var cambio = JSON.parse(localStorage.getItem( 'cambio' ))
+    var retArray = cambio.filter((item) => {
+      return (item.from == curr);
+    });
+    /*
+    0,45 usd = 1 peso;
+    x usd = x usd * 1 peso / 0,45 usd = x pesos
+    */
+    return  value / retArray[0].value; // return precio en curr 
+  }   
 
 }

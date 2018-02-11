@@ -14,3 +14,52 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+$primary-color: #5d9b9b;
+$second-color: #396060;
+$text:white;
+.bar-button{
+	color:$text;
+}
+
+.toolbar-background {
+  background-color: $second-color;
+}
+
+.alert-md .alert-button{
+	  color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: $primary-color;
+    padding: 20px; 
+   .button-inner { 
+        justify-content: center;
+     }
+}
+
+.butom-custom{
+	  color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: $primary-color;
+    padding: 20px; 
+   .button-inner { 
+        justify-content: center;
+     }
+}
+
+
+.butom-custom-float{
+	padding-right:10px;	
+	background: $primary-color;
+	color: white;
+}
+
+.text-white{
+	color:$text;
+}
+

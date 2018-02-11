@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController , NavParams } from 'ionic-angular';
+import { IonicPage, NavController , NavParams , AlertController } from 'ionic-angular';
 import { LocalData } from '../utils/local-data';
 import { DataUtils } from '../utils/data-utils';
 import { CurrencyConvert } from '../utils/currency-convert';
@@ -27,18 +27,34 @@ export class FormPage {
   descripcion:string;  
   precio:string; 
   lugar:string;       
-
+  key:string; 
+  action:string; 
   lugares:Array<any> = [];
   monedas:string;
   monedaSelecionada:string;
   item:any;
-  constructor(public navParams:NavParams , public navCtrl: NavController , public ld:LocalData , public dUtils:DataUtils ,  public cc:CurrencyConvert , public fmt:Format) {
+  constructor(
+    public navParams:NavParams , 
+    public navCtrl: NavController , 
+    public alertCtrl: AlertController, 
+    public ld:LocalData , 
+    public dUtils:DataUtils ,  
+    public cc:CurrencyConvert , 
+    public fmt:Format
+    ) {
     
     //cargo los datos
+    this.nombre = "vamooo";
+    this.action = this.navParams.get("action");
     this.item = this.navParams.get("item");
     if(this.item){
       this.nombre = this.item.nombre;
-      //this.precio = this.item.precio;
+      
+      this.precio = this.fmt.roundNumber(
+        this.cc.getValueConvertInver(
+          this.ld.getItem('monedaSelecionada'), parseFloat(this.item.precio) ),2
+        ).toString();
+
       this.categoria = this.item.categoria;
       this.lugar = this.item.lugar;
       this.descripcion = this.item.descripcion;
@@ -51,6 +67,10 @@ export class FormPage {
       this.monedaSelecionada = this.ld.getItem('monedaSelecionada');
     else
       this.monedaSelecionada = 'USD';
+
+    if(this.action == 'del')
+      this.msgDelete(this.item);
+
   }  
 
   //this function will be called every time you enter the view
@@ -64,18 +84,21 @@ export class FormPage {
     console.log('ionViewDidLoad FormPage');
   }
 
-   crearGasto( nombre:string , precio:string , categoria:string ,  fecha:Date, lugar:string , descripcion:string ) {
+   crearGasto() {
+
 
       var arrayObj = {
-          nombre:nombre,
-          categoria:categoria,
-          fecha:this.dUtils.dateToUnix(fecha.toString()),
-          lugar:lugar,
-          descripcion:descripcion
+          nombre:this.nombre,
+          categoria:this.categoria,
+          fecha:this.dUtils.dateToUnix(this.fecha.toString()),
+          lugar:this.lugar,
+          descripcion:this.descripcion,
+          key:this.key,
+          action:this.action
       }; 
 
       //seto lugar 
-      this.ld.setItemLugar(lugar);
+      this.ld.setItemLugar(this.lugar);
 
       this.localObj = this.ld.getItem('local');
 
@@ -144,6 +167,29 @@ export class FormPage {
     var sigla = value.split('-')[0].trim();
     this.monedaSelecionada = sigla; 
     this.ld.setItem('monedaSelecionada', sigla );
+  }
+
+
+  msgDelete( item ) {
+      //console.log(task.key)
+      let confirm = this.alertCtrl.create({
+        title: 'Está seguro/a que desea eliminar el gasto?',
+        subTitle: 'Esta acción eliminará el registro del sistema.',
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+            }
+          },
+          {
+            text: 'Eliminar',
+            handler: () => {
+              this.edit(item);
+            }
+          }
+        ]
+      });
+      confirm.present();
   }
 
 
