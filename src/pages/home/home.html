@@ -1,0 +1,68 @@
+<ion-header class="header-home">
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+      GastoX
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="sincronizar()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="home">
+
+  <ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar"></ion-searchbar>
+
+  <ion-card>
+
+    <ion-list>
+      <ion-item text-wrap *ngFor="let local of localList"
+      (press)="copiar(local)">
+        <ion-icon name="laptop" danger item-left></ion-icon>
+
+        <h2>{{local.nombre}}</h2> 
+        <h3>Total: <strong>USD {{local.precio}}</strong></h3>
+        <p>Categoria: <strong>{{local.categoria}}</strong></p>    
+        <p>Fecha: <strong>{{dUtils.unixToDate(local.fecha)}}</strong></p>    
+        <p>Lugar: <strong>{{local.lugar}}</strong></p>    
+        <p>Descripcion: <strong>{{local.descripcion}}</strong></p>    
+               
+      </ion-item>
+
+      <ion-item text-wrap *ngFor="let server of serverList" 
+      (press)="copiar(server)">
+        <ion-icon name="cloud-done" favorite item-left></ion-icon>
+
+        <h2>{{server.nombre}}</h2> 
+        <h3>Total: <strong>USD {{fmt.roundNumber(server.precio)}}</strong></h3>
+        <p>Categoria: <strong>{{server.categoria}}</strong></p>    
+        <p>Fecha: <strong>{{dUtils.unixToDate(server.fecha)}}</strong></p>    
+        <p>Lugar: <strong>{{server.lugar}}</strong></p>    
+        <p>Descripcion: <strong>{{server.descripcion}}</strong></p>    
+               
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+
+<ion-fab bottom right style="padding-right:10px;">
+  <button ion-fab color="primary" (click)="newGasto()"><ion-icon name="add"></ion-icon></button>
+</ion-fab>
+
+
+</ion-content>
+
+
+<ion-footer class="home">
+ <ion-toolbar>
+   <ion-title ><span class="total_desc">Total :  <span class="total"> USD {{total}} </span> (Ultimos {{utimosDias}} días)</span></ion-title>
+ </ion-toolbar>
+</ion-footer>

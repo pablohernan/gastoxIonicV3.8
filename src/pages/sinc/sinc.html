@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Sincronia</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="sincronia">
+
+
+<br>
+ <ion-item>
+   <ion-label>Utimos {{utimosDias || 0}} días</ion-label>
+   <ion-range pin="2" min="1" max="30" step="1" snaps="true" [(ngModel)]="utimosDias">
+   </ion-range>
+ </ion-item>
+
+<br>
+
+<div style="width: 100%;text-align:center;">
+  <button round button ion-button orange (click)="localToServer()">
+    Sincronizar
+  </button>
+</div>
+
+</ion-content>

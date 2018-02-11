@@ -1,0 +1,85 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Nuevo gasto</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="pago-create">
+  <ion-item>
+    <ion-label stacked>Nombre</ion-label>
+    <ion-input [(ngModel)]="nombre" type="text" placeholder="dato obligatorio !"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Precio</ion-label>
+    <ion-input [(ngModel)]="precio" type="number" placeholder="dato obligatorio !"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>{{updateCambio()}} USD</ion-label>
+  </ion-item>  
+
+<ion-list>
+  <ion-item>
+    <ion-label stacked>Moneda</ion-label>
+    <ion-select [(ngModel)]="monedas" placeholder="dato obligatorio !" 
+    (ngModelChange)="setMoneda($event)" >
+      <ion-option *ngFor="let moneda of getListMonedas()" 
+        selected="{{moneda.sigla == monedaSelecionada ? 'true' : 'false'}}"
+      >{{moneda.sigla}} - {{moneda.descripcion}}</ion-option>
+    </ion-select>
+  </ion-item>
+</ion-list>  
+
+
+
+<ion-list>
+  <ion-item>
+    <ion-label stacked>Categoria</ion-label>
+    <ion-select [(ngModel)]="categoria" placeholder="dato obligatorio !">
+      <ion-option *ngFor="let categoria of getCategoriasList()">{{categoria.nombre}}</ion-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+<!--
+   <ion-item>
+    <ion-label stacked>Categoria</ion-label>
+    <ion-input [(ngModel)]="categoria" type="text" placeholder="dato obligatorio !"></ion-input>
+  </ion-item> 
+-->
+   <ion-item>
+    <ion-label stacked>Lugar</ion-label>
+    <ion-input [(ngModel)]="lugar" type="text" placeholder="dato obligatorio !" 
+    (ngModelChange)="lugarAutocomplete($event)"></ion-input>
+  </ion-item>   
+
+  <ion-item>
+    <ion-list>
+      <ion-item *ngFor="let item of lugares" tappable (click)="chooseItem(item)">
+      {{ item }}
+      </ion-item>
+    </ion-list>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label>Fecha</ion-label>
+    <ion-datetime displayFormat="D MMM, YY" pickerFormat="DD MMM YYYY" [(ngModel)]="fecha"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Descripción</ion-label>
+    <ion-textarea [(ngModel)]="descripcion"></ion-textarea>
+  </ion-item>
+
+<div style="width: 100%;text-align:center;">
+    <button round button ion-button orange (click)="crearGasto(nombre,updateCambio(),categoria,fecha,lugar,descripcion)">
+      Grabar
+    </button>
+</div>    
+
+
+</ion-content>
