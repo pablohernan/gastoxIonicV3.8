@@ -43,8 +43,7 @@ export class FormPage {
     public fmt:Format
     ) {
     
-    //cargo los datos
-    this.nombre = "vamooo";
+ 
     this.action = this.navParams.get("action");
     this.item = this.navParams.get("item");
     if(this.item){
@@ -58,10 +57,11 @@ export class FormPage {
       this.categoria = this.item.categoria;
       this.lugar = this.item.lugar;
       this.descripcion = this.item.descripcion;
+      this.fecha = dUtils.unixToDate(this.item.fecha);
+    }else{
+      this.fecha = new Date().toISOString();
     }
 
-
-    this.fecha = new Date().toISOString();
     this.ld.updateLugaresList();
     if(this.ld.getItem('monedaSelecionada'))
       this.monedaSelecionada = this.ld.getItem('monedaSelecionada');
@@ -86,29 +86,41 @@ export class FormPage {
 
    crearGasto() {
 
+      switch(this.action) { 
+         case 'edit': { 
+           
+            this.ld.editGasto(
+                this.nombre,
+                this.updateCambio(),
+                this.categoria,
+                this.dUtils.dateToUnix(this.fecha.toString()),
+                this.lugar,
+                this.descripcion,
+                this.item.key,
+                this.action
+            );
 
-      var arrayObj = {
-          nombre:this.nombre,
-          categoria:this.categoria,
-          fecha:this.dUtils.dateToUnix(this.fecha.toString()),
-          lugar:this.lugar,
-          descripcion:this.descripcion,
-          key:this.key,
-          action:this.action
-      }; 
+            this.navCtrl.pop();
+            break; 
+         } 
+         default: {  // add
+            
+            var key = 'local_' + Math.random().toString();
+            this.ld.addGasto(
+                this.nombre,
+                this.updateCambio(),
+                this.categoria,
+                this.dUtils.dateToUnix(this.fecha.toString()),
+                this.lugar,
+                this.descripcion,
+                key,
+                this.action
+            );
 
-      //seto lugar 
-      this.ld.setItemLugar(this.lugar);
-
-      this.localObj = this.ld.getItem('local');
-
-      if( ! this.localObj )
-        this.localObj = [];
-
-      this.localObj.push(arrayObj);
-      this.ld.setItem('local' , this.localObj );
-
-      this.navCtrl.pop();
+            this.navCtrl.pop();
+            break; 
+         } 
+      } 
 
   }
 
@@ -179,12 +191,14 @@ export class FormPage {
           {
             text: 'Cancelar',
             handler: () => {
+              //console.log('canc');
             }
           },
           {
             text: 'Eliminar',
             handler: () => {
-              this.edit(item);
+              this.ld.delGasto(item.key);
+              this.navCtrl.pop();
             }
           }
         ]

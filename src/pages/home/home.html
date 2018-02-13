@@ -25,7 +25,9 @@
     <ion-list>
       <ion-item text-wrap *ngFor="let local of localList"
       (press)="msgAction(local)">
-        <ion-icon name="laptop" danger item-left></ion-icon>
+        <ion-icon 
+          name="laptop" 
+          color="danger" item-left></ion-icon>
 
         <h2>{{local.nombre}}</h2> 
         <h3>Total: <strong>USD {{local.precio}}</strong></h3>
@@ -38,7 +40,8 @@
 
       <ion-item text-wrap *ngFor="let server of serverList" 
       (press)="msgAction(server)">
-        <ion-icon name="cloud-done" favorite item-left></ion-icon>
+        <ion-icon name="{{getIconItem(server.action)}}" 
+        color="{{ (server.action == 'server')?'secondary':'danger'}}" item-left></ion-icon>
 
         <h2>{{server.nombre}}</h2> 
         <h3>Total: <strong>USD {{fmt.roundNumber(server.precio)}}</strong></h3>

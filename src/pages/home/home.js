@@ -12,16 +12,18 @@ import { IonicPage, NavController, AlertController } from 'ionic-angular';
 //import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 //import { Observable } from 'rxjs/Observable';
 import { FormPage } from '../form/form';
-//import { SincPage } from '../sincronia/sincronia';
+import { SincPage } from '../sinc/sinc';
 import { LocalData } from '../utils/local-data';
 import { DataUtils } from '../utils/data-utils';
+import { Format } from '../utils/format';
 //import { DateFormatPipe } from 'angular2-moment';
 var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, alertCtrl, ld, dUtils) {
+    function HomePage(navCtrl, alertCtrl, ld, dUtils, fmt) {
         this.navCtrl = navCtrl;
         this.alertCtrl = alertCtrl;
         this.ld = ld;
         this.dUtils = dUtils;
+        this.fmt = fmt;
         if (!JSON.parse(localStorage.getItem('categorias')))
             this.sincronizar();
         this.initializeItems();
@@ -84,11 +86,60 @@ var HomePage = /** @class */ (function () {
         //console.log( total.toFixed(2) );
         this.total = total.toFixed(2);
     };
-    HomePage.prototype.newGasto = function () {
-        this.navCtrl.push(FormPage);
-    };
     HomePage.prototype.sincronizar = function () {
-        // this.navCtrl.push(SincPage);
+        this.navCtrl.push(SincPage);
+    };
+    //Nuevo , Copiar , Editar, Delete
+    HomePage.prototype.newG = function () {
+        this.navCtrl.push(FormPage, {
+            action: 'new'
+        });
+    };
+    HomePage.prototype.copy = function (item) {
+        this.navCtrl.push(FormPage, {
+            item: item,
+            action: 'copy'
+        });
+    };
+    HomePage.prototype.edit = function (item) {
+        this.navCtrl.push(FormPage, {
+            item: item,
+            action: 'edit'
+        });
+    };
+    HomePage.prototype.del = function (item) {
+        this.navCtrl.push(FormPage, {
+            item: item,
+            action: 'del'
+        });
+    };
+    HomePage.prototype.msgAction = function (item) {
+        var _this = this;
+        //console.log(task.key)
+        var confirm = this.alertCtrl.create({
+            title: 'Que desea hacer?',
+            buttons: [
+                {
+                    text: 'Copiar',
+                    handler: function () {
+                        _this.copy(item);
+                    }
+                },
+                {
+                    text: 'Editar',
+                    handler: function () {
+                        _this.edit(item);
+                    }
+                },
+                {
+                    text: 'Eliminar',
+                    handler: function () {
+                        _this.del(item);
+                    }
+                }
+            ]
+        });
+        confirm.present();
     };
     HomePage = __decorate([
         IonicPage(),
@@ -96,9 +147,13 @@ var HomePage = /** @class */ (function () {
             templateUrl: 'home.html',
             selector: 'app',
             //pipes: [DateFormatPipe],
-            providers: [LocalData, DataUtils]
+            providers: [LocalData, DataUtils, Format]
         }),
-        __metadata("design:paramtypes", [NavController, AlertController, LocalData, DataUtils])
+        __metadata("design:paramtypes", [NavController,
+            AlertController,
+            LocalData,
+            DataUtils,
+            Format])
     ], HomePage);
     return HomePage;
 }());

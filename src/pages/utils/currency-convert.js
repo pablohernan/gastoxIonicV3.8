@@ -198,12 +198,25 @@ var CurrencyConvert = /** @class */ (function () {
             });
         */
     };
+    // recibe moneda local
     CurrencyConvert.prototype.getValueConvert = function (curr, value) {
         var cambio = JSON.parse(localStorage.getItem('cambio'));
         var retArray = cambio.filter(function (item) {
             return (item.from == curr);
         });
-        return retArray[0].value * value;
+        return retArray[0].value * value; // return precio en dolares
+    };
+    //recibe dolares
+    CurrencyConvert.prototype.getValueConvertInver = function (curr, value) {
+        var cambio = JSON.parse(localStorage.getItem('cambio'));
+        var retArray = cambio.filter(function (item) {
+            return (item.from == curr);
+        });
+        /*
+        0,45 usd = 1 peso;
+        x usd = x usd * 1 peso / 0,45 usd = x pesos
+        */
+        return value / retArray[0].value; // return precio en curr 
     };
     CurrencyConvert = __decorate([
         Injectable(),

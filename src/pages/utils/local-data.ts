@@ -121,7 +121,125 @@ export class LocalData {
 
     getMonedasList(){
         return this.monedasList.sort(this.sortFunction);
+    }   
+
+
+    // abm
+    addGasto(
+      nombre,
+      precio,
+      categoria,
+      fecha,
+      lugar,
+      descripcion,
+      key,
+      action
+    ){
+
+
+        var arrayObj = {
+            nombre:nombre,
+            categoria:categoria,
+            precio:precio,
+            fecha:fecha,
+            lugar:lugar,
+            descripcion:descripcion,
+            key:key,
+            action:action
+        }; 
+
+        //seto lugar 
+        var localObj = new Array;
+        this.setItemLugar(lugar);
+        localObj = this.getItem('local');
+
+        if( ! localObj )
+        localObj = [];
+
+        localObj.push(arrayObj);
+        this.setItem('local' , localObj );
+
+
+    }
+
+    editGasto(
+      nombre,
+      precio,
+      categoria,
+      fecha,
+      lugar,
+      descripcion,
+      key,
+      action
+    ){
+
+        var arrayObj = {
+            nombre:nombre,
+            precio:precio,
+            categoria:categoria,
+            fecha:fecha,
+            lugar:lugar,
+            descripcion:descripcion,
+            key:key,
+            action:action
+        }; 
+
+        //seto lugar 
+        var list = new Array;
+        this.setItemLugar(lugar);
+        var index;
+        var listName
+
+
+        if( key.indexOf('local') > -1 )
+            listName = 'local';
+        else
+            listName = 'server';
+
+
+        list = this.getItem(listName);
+        if(this.getPosByKey(key, listName) !== false){
+            index = Number(this.getPosByKey(key, listName));
+            list[ index ] = arrayObj;    
+            this.setItem( listName , list );   
+        }
+
+    }
+
+
+    getPosByKey( key , nameList ){
+        var list = new Array();
+        list = this.getItem(nameList);
+        for(var i = 0; i<list.length; i++){
+            if( list[i].key == key )
+                return i;
+        }
+        return false;
+    }
+
+
+    delGasto(key){
+        var listName;
+        if( key.indexOf('local') > -1 )
+            listName = 'local';
+        else
+            listName = 'server';
+
+        var list = new Array;
+        var index;
+        list = this.getItem(listName);
+        if(this.getPosByKey(key, listName) !== false){
+            index = Number(this.getPosByKey(key, listName));
+            if(listName == 'local')
+                list.splice( index , 1); // si es local lo borro
+            else
+                list[ index ].action = 'del';   // si es del servidor lo marco 
+            this.setItem( listName , list );   
+        }
+
     }    
+
+
 
 
 }

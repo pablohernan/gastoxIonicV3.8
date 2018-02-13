@@ -175,4 +175,27 @@ export class HomePage {
       confirm.present();
   }
 
+
+
+
+  getIconItem(action){
+    
+      switch(action) {  
+         case 'del': { 
+            return 'trash'; 
+         }; 
+         case 'edit': { 
+            return 'create';  
+         } 
+         case 'new': { 
+            return 'laptop';  
+         }                   
+         default: {  // add
+            return 'cloud-done'; 
+         } 
+      } 
+       /*   */
+
+  }
+
 }

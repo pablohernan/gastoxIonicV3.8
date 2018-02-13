@@ -99,6 +99,74 @@ var LocalData = /** @class */ (function () {
     LocalData.prototype.getMonedasList = function () {
         return this.monedasList.sort(this.sortFunction);
     };
+    // abm
+    LocalData.prototype.addGasto = function (nombre, precio, categoria, fecha, lugar, descripcion, key, action) {
+        var arrayObj = {
+            nombre: nombre,
+            categoria: categoria,
+            precio: precio,
+            fecha: fecha,
+            lugar: lugar,
+            descripcion: descripcion,
+            key: key,
+            action: action
+        };
+        //seto lugar 
+        var localObj = new Array;
+        this.setItemLugar(lugar);
+        localObj = this.getItem('local');
+        if (!localObj)
+            localObj = [];
+        localObj.push(arrayObj);
+        this.setItem('local', localObj);
+    };
+    LocalData.prototype.editGasto = function (nombre, precio, categoria, fecha, lugar, descripcion, key, action) {
+        var arrayObj = {
+            nombre: nombre,
+            precio: precio,
+            categoria: categoria,
+            fecha: fecha,
+            lugar: lugar,
+            descripcion: descripcion,
+            key: key,
+            action: action
+        };
+        //seto lugar 
+        var list = new Array;
+        this.setItemLugar(lugar);
+        var index;
+        if (key.indexOf('local') > -1)
+            var listName = 'local';
+        else
+            var listName = 'server';
+        list = this.getItem(listName);
+        if (this.getPosByKey(key, listName) !== false) {
+            index = Number(this.getPosByKey(key, listName));
+            list[index] = arrayObj;
+            this.setItem(listName, list);
+        }
+    };
+    LocalData.prototype.getPosByKey = function (key, nameList) {
+        var list = new Array();
+        list = this.getItem(nameList);
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].key == key)
+                return i;
+        }
+        return false;
+    };
+    LocalData.prototype.delGasto = function (key) {
+        if (key.indexOf('local') > -1)
+            var listName = 'local';
+        else
+            var listName = 'server';
+        list = this.getItem(listName);
+        if (this.getPosByKey(key, listName) !== false) {
+            index = Number(this.getPosByKey(key, listName));
+            list[index] = arrayObj;
+            this.setItem(listName, list);
+        }
+    };
     return LocalData;
 }());
 export { LocalData };

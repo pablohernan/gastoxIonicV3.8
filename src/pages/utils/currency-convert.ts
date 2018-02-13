@@ -166,44 +166,31 @@ ZWD-Zimbabwe Dollar
 
 */
 
-
+  private data:any;
   getConvert( from:string , to:string , callBackFn:Function){
-
-    this.http.get('https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json').subscribe(data => {
-        
-
-        //console.log(data);
-        var precioToFrom = '0';
-        var res = data.json().list.resources;
-        for(var i=0; i<res.length; i++){
-          if(res[i].resource.fields.name == to+'/'+from)
-            precioToFrom = res[i].resource.fields.price;
-        }
-
-        var precioFromTo = 1 / parseFloat(precioToFrom);
-
-        callBackFn( precioFromTo , from , to );
-    });
-
-/*
-    this.http.get('http://download.finance.yahoo.com/d/quotes.csv?s='+from+to+'=X&f=sl1d1t1ba&e=.csv').subscribe(data => {
-        
-
-        // [""ARSUSD=X"", "0.0627", ""12/3/2016"", ""0:25am"", "0.0627", "0.0637↵"]
-
-        //        0 - ""ARSUSD=X"", 
-        //        1 - "0.0627", 
-        //        2 - ""12/3/2016"", 
-        //        3 - ""0:25am"", 
-        //        4 - "0.0627", 
-        //        5 - "0.0637↵"]
-
-        callBackFn( data.text().split(',')[1] , from , to );
-    });
-*/
-
-
+    if(this.data){
+          this.setData(this.data ,from , to , callBackFn);
+    }else{ // llamo el servicio solo una vez , despues consumo los datos retornados
+      this.http.get('https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json').subscribe(data => {       
+          this.data = data;
+          this.setData(data ,from , to , callBackFn);
+      }); 
+    }
   }
+
+  setData(data:any ,from:string , to:string , callBackFn:Function){
+      var precioToFrom = '0';
+      var res = data.json().list.resources;
+      for(var i=0; i<res.length; i++){
+        if(res[i].resource.fields.name == to+'/'+from)
+          precioToFrom = res[i].resource.fields.price;
+      }
+
+      var precioFromTo = 1 / parseFloat(precioToFrom);
+
+      callBackFn( precioFromTo , from , to );      
+  }
+
 
   // recibe moneda local
   getValueConvert( curr:string , value:number){
