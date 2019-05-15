@@ -100,10 +100,11 @@ var LocalData = /** @class */ (function () {
         return this.monedasList.sort(this.sortFunction);
     };
     // abm
-    LocalData.prototype.addGasto = function (nombre, precio, categoria, fecha, lugar, descripcion, key, action) {
+    LocalData.prototype.addGasto = function (nombre, precio, categoria, metodo, fecha, lugar, descripcion, key, action) {
         var arrayObj = {
             nombre: nombre,
             categoria: categoria,
+            metodo: metodo,
             precio: precio,
             fecha: fecha,
             lugar: lugar,
@@ -120,11 +121,12 @@ var LocalData = /** @class */ (function () {
         localObj.push(arrayObj);
         this.setItem('local', localObj);
     };
-    LocalData.prototype.editGasto = function (nombre, precio, categoria, fecha, lugar, descripcion, key, action) {
+    LocalData.prototype.editGasto = function (nombre, precio, categoria, metodo, fecha, lugar, descripcion, key, action) {
         var arrayObj = {
             nombre: nombre,
             precio: precio,
             categoria: categoria,
+            metodo: metodo,
             fecha: fecha,
             lugar: lugar,
             descripcion: descripcion,

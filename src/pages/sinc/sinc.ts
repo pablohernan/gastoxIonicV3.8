@@ -19,6 +19,7 @@ export class SincPage {
   dbListServer:Observable<any[]>;
   dbListMonedas:Observable<any[]>;
 	dbListCategoriasRef:AngularFireList<any>;
+  dbListMetodoRef:AngularFireList<any>;
   dbListServerRef:AngularFireList<any>;
   dbListMonedasRef:AngularFireList<any>; 
   loader:any;
@@ -65,6 +66,7 @@ export class SincPage {
           nombre: (localArray[i].nombre)?localArray[i].nombre:'',
           precio:(localArray[i].precio)?localArray[i].precio:'',
           categoria:(localArray[i].categoria)?localArray[i].categoria:'',
+          metodo:(localArray[i].metodo)?localArray[i].metodo:'',
           fecha:(localArray[i].fecha)?localArray[i].fecha:'',
           lugar:(localArray[i].lugar)?localArray[i].lugar:'',
           descripcion:(localArray[i].descripcion)?localArray[i].descripcion:''
@@ -95,6 +97,7 @@ export class SincPage {
             nombre: (serverArray[x].nombre)?serverArray[x].nombre:'',
             precio:(serverArray[x].precio)?serverArray[x].precio:'',
             categoria:(serverArray[x].categoria)?serverArray[x].categoria:'',
+            metodo:(serverArray[x].metodo)?serverArray[x].metodo:'',
             fecha:(serverArray[x].fecha)?serverArray[x].fecha:'',
             lugar:(serverArray[x].lugar)?serverArray[x].lugar:'',
             descripcion:(serverArray[x].descripcion)?serverArray[x].descripcion:''

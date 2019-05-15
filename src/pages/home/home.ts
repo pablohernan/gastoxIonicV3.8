@@ -70,6 +70,8 @@ export class HomePage {
         return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
                (item.precio.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
                (item.categoria.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
+               (item.metodo.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
+               (item.descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
                (item.lugar.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
 
@@ -77,6 +79,8 @@ export class HomePage {
         return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
                (item.precio.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
                (item.categoria.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
+               (item.metodo.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
+               (item.descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
                (item.lugar.toLowerCase().indexOf(val.toLowerCase()) > -1);
 
       });

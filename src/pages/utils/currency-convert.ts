@@ -11,6 +11,16 @@ export class CurrencyConvert {
 
 
 /* params 
+Api 
+
+KEY
+ab4cbafe9fb9108d5eeb045717d87b91
+
+
+pablohernanarg@gmail.com
+pablo123
+
+
 
 AFA-Afghanistan Afghani
 ALL-Albanian Lek
@@ -171,7 +181,9 @@ ZWD-Zimbabwe Dollar
     if(this.data){
           this.setData(this.data ,from , to , callBackFn);
     }else{ // llamo el servicio solo una vez , despues consumo los datos retornados
-      this.http.get('https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json').subscribe(data => {       
+      
+      this.http.get('http://data.fixer.io/api/latest?access_key=ab4cbafe9fb9108d5eeb045717d87b91').subscribe(data => {  
+      //this.http.get('https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json').subscribe(data => {       
           this.data = data;
           this.setData(data ,from , to , callBackFn);
       }); 
@@ -180,12 +192,19 @@ ZWD-Zimbabwe Dollar
 
   setData(data:any ,from:string , to:string , callBackFn:Function){
       var precioToFrom = '0';
+      var res = JSON.parse(data._body).rates;
+      /*
       var res = data.json().list.resources;
       for(var i=0; i<res.length; i++){
         if(res[i].resource.fields.name == to+'/'+from)
           precioToFrom = res[i].resource.fields.price;
       }
+      */
 
+      precioToFrom = eval('res.'+from); //novo
+      precioToFrom = String(parseFloat(precioToFrom)/res.USD);
+
+      console.log('from: ' +from+ ' - to :' + to + ' - ' + precioToFrom);
       var precioFromTo = 1 / parseFloat(precioToFrom);
 
       callBackFn( precioFromTo , from , to );      

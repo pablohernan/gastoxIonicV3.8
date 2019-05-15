@@ -24,6 +24,7 @@ export class FormPage {
   fecha: String;
   nombre:string;  
   categoria:string;  
+  metodo:string;  
   descripcion:string;  
   precio:string; 
   lugar:string;       
@@ -55,6 +56,7 @@ export class FormPage {
         ).toString();
 
       this.categoria = this.item.categoria;
+      this.metodo = this.item.metodo;
       this.lugar = this.item.lugar;
       this.descripcion = this.item.descripcion;
       this.fecha = dUtils.unixToDate(this.item.fecha);
@@ -93,6 +95,7 @@ export class FormPage {
                 this.nombre,
                 this.updateCambio(),
                 this.categoria,
+                this.metodo,
                 this.dUtils.dateToUnix(this.fecha.toString()),
                 this.lugar,
                 this.descripcion,
@@ -110,6 +113,7 @@ export class FormPage {
                 this.nombre,
                 this.updateCambio(),
                 this.categoria,
+                this.metodo,
                 this.dUtils.dateToUnix(this.fecha.toString()),
                 this.lugar,
                 this.descripcion,

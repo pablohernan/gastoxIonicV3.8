@@ -48,6 +48,7 @@ var SincPage = /** @class */ (function () {
                     nombre: (localArray[i].nombre) ? localArray[i].nombre : '',
                     precio: (localArray[i].precio) ? localArray[i].precio : '',
                     categoria: (localArray[i].categoria) ? localArray[i].categoria : '',
+                    metodo: (localArray[i].metodo) ? localArray[i].metodo : '',
                     fecha: (localArray[i].fecha) ? localArray[i].fecha : '',
                     lugar: (localArray[i].lugar) ? localArray[i].lugar : '',
                     descripcion: (localArray[i].descripcion) ? localArray[i].descripcion : ''

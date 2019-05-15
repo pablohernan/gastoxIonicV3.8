@@ -35,6 +35,7 @@ var FormPage = /** @class */ (function () {
             this.nombre = this.item.nombre;
             this.precio = this.fmt.roundNumber(this.cc.getValueConvertInver(this.ld.getItem('monedaSelecionada'), parseFloat(this.item.precio)), 2).toString();
             this.categoria = this.item.categoria;
+            this.metodo = this.item.metodo;
             this.lugar = this.item.lugar;
             this.descripcion = this.item.descripcion;
             this.fecha = dUtils.unixToDate(this.item.fecha);
@@ -62,13 +63,13 @@ var FormPage = /** @class */ (function () {
     FormPage.prototype.crearGasto = function () {
         switch (this.action) {
             case 'edit': {
-                this.ld.editGasto(this.nombre, this.updateCambio(), this.categoria, this.dUtils.dateToUnix(this.fecha.toString()), this.lugar, this.descripcion, this.item.key, this.action);
+                this.ld.editGasto(this.nombre, this.updateCambio(), this.categoria, this.metodo, this.dUtils.dateToUnix(this.fecha.toString()), this.lugar, this.descripcion, this.item.key, this.action);
                 this.navCtrl.pop();
                 break;
             }
             default: {
                 var key = 'local_' + Math.random().toString();
-                this.ld.addGasto(this.nombre, this.updateCambio(), this.categoria, this.dUtils.dateToUnix(this.fecha.toString()), this.lugar, this.descripcion, key, this.action);
+                this.ld.addGasto(this.nombre, this.updateCambio(), this.categoria, this.metodo, this.dUtils.dateToUnix(this.fecha.toString()), this.lugar, this.descripcion, key, this.action);
                 this.navCtrl.pop();
                 break;
             }
